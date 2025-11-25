@@ -2,10 +2,7 @@ import { JSX, useState } from "react";
 import { Checkbox, Dropdown } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 
-interface CheckboxState {
-  allSelected: boolean;
-  someSelected: boolean;
-}
+
 
 interface ListItemState {
   selectedPages: string[];
@@ -119,8 +116,10 @@ function Home() {
   };
 
   const dropdownContent = (index: number): JSX.Element => {
-    const { allSelected, someSelected } = getParentCheckboxState(index);
     const selectedPages = listItems[index].selectedPages;
+ 
+    // Get parent checkbox color state
+    const parentCheckboxState = getCheckboxColorState(index);
 
     return (
       <div className="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
@@ -131,17 +130,17 @@ function Home() {
         >
           <span className="text-gray-800 font-medium">All pages</span>
           <div
-            className={`flex items-center justify-center w-5 h-5 border border-gray-300 rounded ${
-              allSelected
-                ? "bg-accent-500 border-accent-500"
-                : someSelected
-                ? "border-accent-500"
-                : "bg-white"
-            }`}
+            className="flex items-center justify-center w-5 h-5 border rounded"
+            style={{
+              borderColor: parentCheckboxState.borderColor,
+              backgroundColor: parentCheckboxState.backgroundColor,
+            }}
           >
-            {allSelected && <CheckOutlined className="text-white text-xs" />}
-            {someSelected && (
-              <CheckOutlined className="text-accent-500 text-xs opacity-50" />
+            {parentCheckboxState.showCheckmark && (
+              <CheckOutlined
+                className="text-xs"
+                style={{ color: parentCheckboxState.checkmarkColor }}
+              />
             )}
           </div>
         </div>
@@ -183,15 +182,6 @@ function Home() {
         </div>
       </div>
     );
-  };
-
-  const getParentCheckboxState = (index: number): CheckboxState => {
-    const selectedPages = listItems[index].selectedPages;
-    const allSelected: boolean = selectedPages.length === pages.length;
-    const someSelected: boolean =
-      selectedPages.length > 0 && selectedPages.length < pages.length;
-
-    return { allSelected, someSelected };
   };
 
   return (
