@@ -127,7 +127,7 @@ function Home() {
     return (
       <div className="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
         {/* Parent Row */}
-        <div className="p-3">
+        <div className="p-3 py-4">
           <div
             className="flex items-center justify-between cursor-pointer hover:bg-gray-50"
             onClick={() => handleSelectAll(index)}
@@ -186,7 +186,7 @@ function Home() {
         <div className="p-3">
           <div className="border-b border-gray-200 mb-4"></div>
           <button
-            className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
+            className={`w-full py-2 px-4 rounded-l font-medium transition-colors ${
               selectedPages.length > 0
                 ? "bg-[#FFD84D] hover:bg-[#FFCE22] text-gray-900"
                 : "bg-[#FFD84D] bg-opacity-30 text-gray-500 cursor-not-allowed"
@@ -220,7 +220,7 @@ function Home() {
               overlayClassName="w-full max-w-[500px]"
             >
               <div
-                className={`flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors bg-white rounded-xl shadow-lg border border-gray-200 mb-4 ${
+                className={`flex items-center justify-between p-4 h-42 cursor-pointer hover:bg-gray-50 transition-colors bg-white rounded-l shadow-lg border border-gray-200 mb-4 ${
                   openDropdownIndex === index
                     ? "border-l-4 border-l-accent-500 bg-gray-50"
                     : ""
