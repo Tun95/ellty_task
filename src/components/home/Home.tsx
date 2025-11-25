@@ -55,13 +55,60 @@ function Home() {
     });
   };
 
-  const getParentCheckboxState = (index: number): CheckboxState => {
+  const getCheckboxColorState = (
+    index: number
+  ): {
+    borderColor: string;
+    backgroundColor: string;
+    checkmarkColor: string;
+    showCheckmark: boolean;
+  } => {
     const selectedPages = listItems[index].selectedPages;
-    const allSelected: boolean = selectedPages.length === pages.length;
-    const someSelected: boolean =
-      selectedPages.length > 0 && selectedPages.length < pages.length;
+    const selectedCount = selectedPages.length;
 
-    return { allSelected, someSelected };
+    if (selectedCount === 0) {
+      return {
+        borderColor: "#CDCDCD",
+        backgroundColor: "transparent",
+        checkmarkColor: "transparent",
+        showCheckmark: false,
+      };
+    } else if (selectedCount === 1) {
+      return {
+        borderColor: "#E3E3E3",
+        backgroundColor: "transparent",
+        checkmarkColor: "#E3E3E3",
+        showCheckmark: true,
+      };
+    } else if (selectedCount === 2) {
+      return {
+        borderColor: "#BDBDBD",
+        backgroundColor: "transparent",
+        checkmarkColor: "#BDBDBD",
+        showCheckmark: true,
+      };
+    } else if (selectedCount === 3) {
+      return {
+        borderColor: "#5087F8",
+        backgroundColor: "#5087F8",
+        checkmarkColor: "#FFFFFF",
+        showCheckmark: true,
+      };
+    } else if (selectedCount === 4) {
+      return {
+        borderColor: "#2469F6",
+        backgroundColor: "#2469F6",
+        checkmarkColor: "#FFFFFF",
+        showCheckmark: true,
+      };
+    } else {
+      return {
+        borderColor: "#CDCDCD",
+        backgroundColor: "transparent",
+        checkmarkColor: "transparent",
+        showCheckmark: false,
+      };
+    }
   };
 
   const handleDropdownVisibleChange = (
@@ -138,12 +185,21 @@ function Home() {
     );
   };
 
+  const getParentCheckboxState = (index: number): CheckboxState => {
+    const selectedPages = listItems[index].selectedPages;
+    const allSelected: boolean = selectedPages.length === pages.length;
+    const someSelected: boolean =
+      selectedPages.length > 0 && selectedPages.length < pages.length;
+
+    return { allSelected, someSelected };
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-[500px]">
         {/* List of 8 "All pages" items */}
         {listItems.map((_, index: number) => {
-          const { allSelected, someSelected } = getParentCheckboxState(index);
+          const checkboxState = getCheckboxColorState(index);
 
           return (
             <Dropdown
@@ -165,19 +221,17 @@ function Home() {
               >
                 <span className="text-gray-700">All pages</span>
                 <div
-                  className={`flex items-center justify-center w-5 h-5 border rounded ${
-                    allSelected
-                      ? "bg-accent-500 border-accent-500"
-                      : someSelected
-                      ? "border-accent-500"
-                      : "border-gray-300 bg-white"
-                  }`}
+                  className="flex items-center justify-center w-5 h-5 border rounded"
+                  style={{
+                    borderColor: checkboxState.borderColor,
+                    backgroundColor: checkboxState.backgroundColor,
+                  }}
                 >
-                  {allSelected && (
-                    <CheckOutlined className="text-white text-xs" />
-                  )}
-                  {someSelected && (
-                    <CheckOutlined className="text-accent-500 text-xs opacity-50" />
+                  {checkboxState.showCheckmark && (
+                    <CheckOutlined
+                      className="text-xs"
+                      style={{ color: checkboxState.checkmarkColor }}
+                    />
                   )}
                 </div>
               </div>
