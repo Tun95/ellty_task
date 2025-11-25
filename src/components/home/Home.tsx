@@ -1,8 +1,6 @@
 import { JSX, useState } from "react";
-import { Checkbox, Dropdown } from "antd";
+import { Dropdown } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
-
-
 
 interface ListItemState {
   selectedPages: string[];
@@ -117,62 +115,76 @@ function Home() {
 
   const dropdownContent = (index: number): JSX.Element => {
     const selectedPages = listItems[index].selectedPages;
- 
+
     // Get parent checkbox color state
     const parentCheckboxState = getCheckboxColorState(index);
 
     return (
       <div className="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
         {/* Parent Row */}
-        <div
-          className="flex items-center justify-between p-3 cursor-pointer hover:bg-gray-50"
-          onClick={() => handleSelectAll(index)}
-        >
-          <span className="text-gray-800 font-medium">All pages</span>
+        <div className="p-3">
           <div
-            className="flex items-center justify-center w-5 h-5 border rounded"
-            style={{
-              borderColor: parentCheckboxState.borderColor,
-              backgroundColor: parentCheckboxState.backgroundColor,
-            }}
+            className="flex items-center justify-between cursor-pointer hover:bg-gray-50"
+            onClick={() => handleSelectAll(index)}
           >
-            {parentCheckboxState.showCheckmark && (
-              <CheckOutlined
-                className="text-xs"
-                style={{ color: parentCheckboxState.checkmarkColor }}
-              />
-            )}
+            <span className="text-gray-800 font-medium">All pages</span>
+            <div
+              className="flex items-center justify-center w-5 h-5 border rounded"
+              style={{
+                borderColor: parentCheckboxState.borderColor,
+                backgroundColor: parentCheckboxState.backgroundColor,
+              }}
+            >
+              {parentCheckboxState.showCheckmark && (
+                <CheckOutlined
+                  className="text-xs"
+                  style={{ color: parentCheckboxState.checkmarkColor }}
+                />
+              )}
+            </div>
           </div>
+          <div className="border-b border-gray-200 pb-4"></div>
         </div>
 
-        <div className="border-b border-gray-200"></div>
-
         {/* Page Options */}
-        {pages.map((page: string, pageIndex: number) => (
+        {pages.map((page: string) => (
           <div key={page}>
             <div
               className="flex items-center justify-between p-3 cursor-pointer hover:bg-gray-50"
               onClick={() => handlePageSelect(page, index)}
             >
               <span className="text-gray-700">{page}</span>
-              <Checkbox
-                checked={selectedPages.includes(page)}
-                onChange={() => handlePageSelect(page, index)}
-              />
+              <div
+                className="flex items-center justify-center w-5 h-5 border border-gray-300 rounded"
+                style={{
+                  borderColor: selectedPages.includes(page)
+                    ? "#2469F6"
+                    : "#D1D5DB",
+                  backgroundColor: selectedPages.includes(page)
+                    ? "#2469F6"
+                    : "transparent",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePageSelect(page, index);
+                }}
+              >
+                {selectedPages.includes(page) && (
+                  <CheckOutlined className="text-white text-xs" />
+                )}
+              </div>
             </div>
-            {pageIndex < pages.length - 1 && (
-              <div className="border-b border-gray-100"></div>
-            )}
           </div>
         ))}
 
         {/* Button */}
         <div className="p-3">
+          <div className="border-b border-gray-200 mb-4"></div>
           <button
             className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
               selectedPages.length > 0
-                ? "bg-yellow-400 hover:bg-yellow-500 text-gray-900"
-                : "bg-yellow-100 text-gray-500 cursor-not-allowed"
+                ? "bg-[#FFD84D] hover:bg-[#FFCE22] text-gray-900"
+                : "bg-[#FFD84D] bg-opacity-30 text-gray-500 cursor-not-allowed"
             }`}
             disabled={selectedPages.length === 0}
             onClick={() => setOpenDropdownIndex(null)}
