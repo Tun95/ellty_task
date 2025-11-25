@@ -211,12 +211,10 @@ function Home() {
           return (
             <Dropdown
               key={index}
-              overlay={dropdownContent(index)}
+              dropdownRender={() => dropdownContent(index)}
               trigger={["click"]}
-              visible={openDropdownIndex === index}
-              onVisibleChange={(visible) =>
-                handleDropdownVisibleChange(visible, index)
-              }
+              open={openDropdownIndex === index}
+              onOpenChange={(open) => handleDropdownVisibleChange(open, index)}
               overlayClassName="w-full max-w-[500px]"
             >
               <div
