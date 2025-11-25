@@ -16,6 +16,7 @@ function Home() {
 
   const pages: string[] = ["Page 1", "Page 2", "Page 3", "Page 4"];
 
+  // HANDLE PAGE SELECT
   const handlePageSelect = (page: string, index: number): void => {
     setListItems((prev) => {
       const newListItems = [...prev];
@@ -35,6 +36,7 @@ function Home() {
     });
   };
 
+  // HANDLE SELECT ALL
   const handleSelectAll = (index: number): void => {
     setListItems((prev) => {
       const newListItems = [...prev];
@@ -50,6 +52,7 @@ function Home() {
     });
   };
 
+  // GET CHECKBOX COLOR STATE
   const getCheckboxColorState = (
     index: number
   ): {
@@ -106,6 +109,7 @@ function Home() {
     }
   };
 
+  // HANDLE DROPDOWN VISIBILITY
   const handleDropdownVisibleChange = (
     visible: boolean,
     index: number
@@ -113,6 +117,7 @@ function Home() {
     setOpenDropdownIndex(visible ? index : null);
   };
 
+  // DROPDOWN CONTENT
   const dropdownContent = (index: number): JSX.Element => {
     const selectedPages = listItems[index].selectedPages;
 
